@@ -11,7 +11,7 @@ public class AdminRequest {
 	private String name;
 	private String email;
 	private String password;
-	
+	private AdminType adminType;
 	
 	
 

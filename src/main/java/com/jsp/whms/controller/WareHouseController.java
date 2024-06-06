@@ -13,7 +13,7 @@ import com.jsp.whms.util.ResponseStructure;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api/v1")
 public class WareHouseController {
 	
 	@GetMapping(value = "/warehouse")

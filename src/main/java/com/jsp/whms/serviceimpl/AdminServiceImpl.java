@@ -44,7 +44,7 @@ public class AdminServiceImpl implements AdminService {
 		// use only java 8
 
 		if (adminRepository.existsByAdminType(AdminType.SUPER_ADMIN))
-			throw new IllLegalOperationException("");
+			throw new IllLegalOperationException("doing ill leagal oeration");
 		Admin admin = adminMapper.mapToAdmin(adminRequest, new Admin());
 		admin.setAdminType(AdminType.SUPER_ADMIN);
 		adminRepository.save(admin);
