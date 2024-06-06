@@ -1,9 +1,6 @@
 package com.jsp.whms.entity;
 
-import java.util.List;
-
 import com.jsp.whms.enums.AdminType;
-import com.jsp.whms.enums.Privilage;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -31,7 +28,7 @@ public class Admin {
 	private String email;
 	private String password;
 	@Enumerated(EnumType.STRING)
-	private AdminType admintype;
+	private AdminType adminType;
     
 	
 	

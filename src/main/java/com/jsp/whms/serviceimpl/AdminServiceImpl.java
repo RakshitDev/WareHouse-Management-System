@@ -43,10 +43,10 @@ public class AdminServiceImpl implements AdminService {
 
 		// use only java 8
 
-		if (adminRepository.existByAdminType(AdminType.SUPER_ADMIN))
+		if (adminRepository.existsByAdminType(AdminType.SUPER_ADMIN))
 			throw new IllLegalOperationException("");
 		Admin admin = adminMapper.mapToAdmin(adminRequest, new Admin());
-		admin.setAdmintype(AdminType.SUPER_ADMIN);
+		admin.setAdminType(AdminType.SUPER_ADMIN);
 		adminRepository.save(admin);
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(new ResponseStructure<AdminResponse>().setMessage("Super admin Created ")

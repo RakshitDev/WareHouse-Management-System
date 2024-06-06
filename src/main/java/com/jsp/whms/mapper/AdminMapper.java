@@ -1,9 +1,11 @@
 package com.jsp.whms.mapper;
 
+import org.springframework.stereotype.Component;
+
 import com.jsp.whms.entity.Admin;
 import com.jsp.whms.requestdto.AdminRequest;
 import com.jsp.whms.responsedto.AdminResponse;
-
+@Component
 public class AdminMapper {
 
 	public Admin mapToAdmin(AdminRequest adminRequest,Admin admin) {

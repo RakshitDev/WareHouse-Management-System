@@ -9,6 +9,6 @@ import com.jsp.whms.enums.AdminType;
 
 public interface AdminRepository extends JpaRepository<Admin, Integer>{
 	
-	public boolean existByAdminType(AdminType adminType);
+	public boolean existsByAdminType(AdminType adminType);
 
 }
