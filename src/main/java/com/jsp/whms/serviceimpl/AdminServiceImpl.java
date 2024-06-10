@@ -9,11 +9,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.jsp.whms.entity.Admin;
+import com.jsp.whms.entity.WareHouse;
 import com.jsp.whms.enums.AdminType;
 import com.jsp.whms.enums.Privilage;
 import com.jsp.whms.exception.IllLegalOperationException;
+import com.jsp.whms.exception.WareHouseNotFoundByIdException;
 import com.jsp.whms.mapper.AdminMapper;
 import com.jsp.whms.repository.AdminRepository;
+import com.jsp.whms.repository.WareHouseRepository;
 import com.jsp.whms.requestdto.AdminRequest;
 import com.jsp.whms.responsedto.AdminResponse;
 import com.jsp.whms.service.AdminService;
@@ -25,7 +28,10 @@ public class AdminServiceImpl implements AdminService {
 	private AdminRepository adminRepository;
 
 	@Autowired
-	AdminMapper adminMapper;
+  private AdminMapper adminMapper;
+	
+	@Autowired
+	private WareHouseRepository wareHouseRepository;
 
 	@Override
 	public ResponseEntity<ResponseStructure<AdminResponse>> saveSuperAdmin(AdminRequest adminRequest) {
@@ -55,9 +61,24 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public ResponseEntity<ResponseStructure<AdminResponse>> saveAdmin(AdminRequest adminRequest) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<ResponseStructure<AdminResponse>> saveAdmin(AdminRequest adminRequest, int wareHouseId) {
+	return	wareHouseRepository.findById(wareHouseId).map(wareHouse->{
+		Admin admin = adminMapper.mapToAdmin(adminRequest, new Admin());
+		admin.setAdminType(AdminType.ADMIN);
+		admin = adminRepository.save(admin);
+		wareHouse.setAdmin(admin);
+	   	    wareHouseRepository.save(wareHouse);
+			return ResponseEntity.status(HttpStatus.CREATED)
+					.body(new ResponseStructure<AdminResponse>()
+							.setStatus(HttpStatus.CREATED.value())
+							.setMessage("Admin saved to db")
+							.setData(adminMapper.mapToAdminResponse(admin)));
+					
+			
+		}).orElseThrow(()->new WareHouseNotFoundByIdException("No wareHouse with that Id is present") );
+		
 	}
+
+	
 
 }
