@@ -28,7 +28,7 @@ public class AdminServiceImpl implements AdminService {
 	AdminMapper adminMapper;
 
 	@Override
-	public ResponseEntity<ResponseStructure<AdminResponse>> saveAdmin(AdminRequest adminRequest) {
+	public ResponseEntity<ResponseStructure<AdminResponse>> saveSuperAdmin(AdminRequest adminRequest) {
 //		Optional<Admin> adminType = adminRepository.findByAdminType(AdminType.SUPER_ADMIN);
 //		if(adminType.isPresent()) {
 //			throw new IllLegalOperationException("");
@@ -52,6 +52,12 @@ public class AdminServiceImpl implements AdminService {
 				.body(new ResponseStructure<AdminResponse>().setMessage("Super admin Created ")
 						.setStatus(HttpStatus.CREATED.value()).setData(adminMapper.mapToAdminResponse(admin)));
 
+	}
+
+	@Override
+	public ResponseEntity<ResponseStructure<AdminResponse>> saveAdmin(AdminRequest adminRequest) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
