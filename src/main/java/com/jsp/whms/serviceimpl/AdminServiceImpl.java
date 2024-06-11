@@ -42,19 +42,6 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public ResponseEntity<ResponseStructure<AdminResponse>> saveSuperAdmin(AdminRequest adminRequest) {
-//		Optional<Admin> adminType = adminRepository.findByAdminType(AdminType.SUPER_ADMIN);
-//		if(adminType.isPresent()) {
-//			throw new IllLegalOperationException("");
-//		}else {
-//		Admin admin=adminRepository.save(adminMapper.mapToAdmin( adminRequest,new Admin()));
-//		return ResponseEntity.status(HttpStatus.CREATED)
-//				.body(new ResponseStructure<AdminResponse>()
-//						.setData(adminMapper.mapToAdminResponse(admin))
-//						.setMessage("Admin saved in db")
-//						.setStatus(HttpStatus.CREATED.value()));
-//		}
-
-		// use only java 8
 
 		if (adminRepository.existsByAdminType(AdminType.SUPER_ADMIN))
 			throw new IllLegalOperationException("doing ill leagal oeration");
@@ -116,6 +103,31 @@ public class AdminServiceImpl implements AdminService {
 			
 		}).orElseThrow(()->new AdminNotFoundByIdException("Requested id is not Present"));
 	
+	}
+
+	@Override
+	public ResponseEntity<ResponseStructure<AdminResponse>> findByAdminId(int adminId) {
+		
+	    return adminRepository.findById(adminId).map(admin->{
+			return ResponseEntity.status(HttpStatus.FOUND)
+					.body(new ResponseStructure<AdminResponse>()
+							.setStatus(HttpStatus.FOUND.value())
+							.setMessage("Admin Founnd By Id")
+							.setData(adminMapper.mapToAdminResponse(admin))
+							);
+		}).orElseThrow(()->new AdminNotFoundByIdException("No Admin found By that Request"));
+	}
+
+	@Override
+	public ResponseEntity<ResponseStructure<List<AdminResponse>>> findAllAdmin() {
+		List<AdminResponse> admins = adminRepository.findAll().stream().map(admin->
+		adminMapper.mapToAdminResponse(admin)).toList();
+		return ResponseEntity.status(HttpStatus.FOUND)
+				.body(new ResponseStructure<List<AdminResponse>>()
+						.setStatus(HttpStatus.FOUND.value())
+						.setMessage("List of All Admins")
+						.setData(admins));
+		
 	}
 		
 	}

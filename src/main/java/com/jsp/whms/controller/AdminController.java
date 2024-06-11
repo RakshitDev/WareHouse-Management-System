@@ -1,5 +1,7 @@
 package com.jsp.whms.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,6 +20,9 @@ import com.jsp.whms.util.ResponseStructure;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api/v1")
@@ -46,5 +51,13 @@ public class AdminController {
 		return adminService.updateAdminBySuperAdmin(adminRequest,adminId);
 	}
 	
-
+	@GetMapping(value = "/admins/{adminId}")
+	ResponseEntity<ResponseStructure<AdminResponse>> findByAdminId(@PathVariable int adminId){
+		return adminService.findByAdminId(adminId);
+	}
+	
+	@GetMapping(value = "/admins")
+	ResponseEntity<ResponseStructure<List<AdminResponse>>> findAllAdmin(){
+		return adminService.findAllAdmin();
+	}
 }
