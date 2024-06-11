@@ -68,13 +68,13 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public ResponseEntity<ResponseStructure<AdminResponse>> saveAdmin(AdminRequest adminRequest, int wareHouseId) {
-	return	wareHouseRepository.findById(wareHouseId).map(wareHouse->{
+	public ResponseEntity<ResponseStructure<AdminResponse>> saveAdmin(AdminRequest adminRequest, int warehouseId) {
+	return	wareHouseRepository.findById(warehouseId).map(warehouse->{
 		Admin admin = adminMapper.mapToAdmin(adminRequest, new Admin());
 		admin.setAdminType(AdminType.ADMIN);
 		admin = adminRepository.save(admin);
-		wareHouse.setAdmin(admin);
-	   	    wareHouseRepository.save(wareHouse);
+		warehouse.setAdmin(admin);
+	   	    wareHouseRepository.save(warehouse);
 			return ResponseEntity.status(HttpStatus.CREATED)
 					.body(new ResponseStructure<AdminResponse>()
 							.setStatus(HttpStatus.CREATED.value())

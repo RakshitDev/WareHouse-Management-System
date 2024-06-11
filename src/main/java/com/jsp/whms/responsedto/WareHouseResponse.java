@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class WareHouseResponse {
-	private int wareHouseId;
+	private int warehouseId;
 	private String wareHouseName;
 
 }

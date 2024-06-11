@@ -30,8 +30,8 @@ public class AdminController {
 		
 	}
 	@PostMapping(value="/warehouses/{wareHouseId}/admins")
-	ResponseEntity<ResponseStructure<AdminResponse>> saveAdmin(@RequestBody AdminRequest adminRequest,@PathVariable int wareHouseId){
-		return adminService.saveAdmin(adminRequest,wareHouseId);
+	ResponseEntity<ResponseStructure<AdminResponse>> saveAdmin(@RequestBody AdminRequest adminRequest,@PathVariable int warehouseId){
+		return adminService.saveAdmin(adminRequest,warehouseId);
 				
 	}
 	
