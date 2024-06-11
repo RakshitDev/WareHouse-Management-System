@@ -18,6 +18,7 @@ import com.jsp.whms.exception.WareHouseNotFoundByIdException;
 import com.jsp.whms.mapper.WareHouseMapper;
 import com.jsp.whms.repository.WareHouseRepository;
 import com.jsp.whms.requestdto.WareHouseRequest;
+import com.jsp.whms.responsedto.AdminResponse;
 import com.jsp.whms.responsedto.WareHouseResponse;
 import com.jsp.whms.service.WareHouseService;
 import com.jsp.whms.util.ResponseStructure;
@@ -57,5 +58,23 @@ public class WareHouseServiceImpl implements WareHouseService{
 		}).orElseThrow(()->new WareHouseNotFoundByIdException("Failed to update"));
 	
 	}
+
+	@Override
+	public ResponseEntity<ResponseStructure<WareHouseResponse>> findWarehouse(int warehouseId) {
+	return	wareHouseRepository.findById(warehouseId).map(warehouse->{ 
+		return ResponseEntity.status(HttpStatus.FOUND)
+		.body(new ResponseStructure<WareHouseResponse>()
+				.setMessage("WareHouse found")
+				.setStatus(HttpStatus.FOUND.value())
+				.setData(wareHouseMapper.mapToWareHouseResponse(warehouse)
+						));
+		
+				
+	}).orElseThrow(()->new WareHouseNotFoundByIdException("No Warhouse found by that id"));
+		
+				
+	}
+
+	
 
 }
