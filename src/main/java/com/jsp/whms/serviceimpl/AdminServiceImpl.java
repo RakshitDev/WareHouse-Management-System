@@ -101,6 +101,22 @@ public class AdminServiceImpl implements AdminService {
 		
 	  
 	  }
+
+	@Override
+	public ResponseEntity<ResponseStructure<AdminResponse>> updateAdminBySuperAdmin(AdminRequest adminRequest,
+			int adminId) {
+		return adminRepository.findById(adminId).map(admin->{
+			adminRepository.save(adminMapper.mapToAdmin(adminRequest, admin));
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(new ResponseStructure<AdminResponse>()
+							.setMessage("Updated SuccessFullt")
+							.setStatus(HttpStatus.OK.value())
+							.setData(adminMapper.mapToAdminResponse(admin))
+							);
+			
+		}).orElseThrow(()->new AdminNotFoundByIdException("Requested id is not Present"));
+	
+	}
 		
 	}
 

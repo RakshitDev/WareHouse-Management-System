@@ -17,6 +17,8 @@ public interface AdminService {
 	ResponseEntity<ResponseStructure<AdminResponse>> saveAdmin(AdminRequest adminRequest,int warehouseId);
 
 	ResponseEntity<ResponseStructure<AdminResponse>> updateAdmin(AdminRequest adminReuest);
+
+	ResponseEntity<ResponseStructure<AdminResponse>> updateAdminBySuperAdmin(AdminRequest adminRequest, int adminId);
 	
 	
 

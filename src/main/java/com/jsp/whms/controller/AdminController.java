@@ -2,6 +2,7 @@ package com.jsp.whms.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -29,7 +30,7 @@ public class AdminController {
 		return adminService.saveSuperAdmin(adminRequest);
 		
 	}
-	@PostMapping(value="/warehouses/{wareHouseId}/admins")
+	@PostMapping(value="/warehouses/{warehouseId}/admins")
 	ResponseEntity<ResponseStructure<AdminResponse>> saveAdmin(@RequestBody AdminRequest adminRequest,@PathVariable int warehouseId){
 		return adminService.saveAdmin(adminRequest,warehouseId);
 				
@@ -38,6 +39,11 @@ public class AdminController {
 	@PutMapping(value = "/admins")
 	ResponseEntity<ResponseStructure<AdminResponse>> updateByAdminId(@RequestBody AdminRequest adminRequest){
 		return adminService.updateAdmin(adminRequest);
+	}
+	@PreAuthorize("hasAuthority('UPDATE_ADMIN')")
+	@PutMapping(value = "/admins/{adminId}") 
+	ResponseEntity<ResponseStructure<AdminResponse>> updateAdminBySuperAdmin(@RequestBody AdminRequest adminRequest,@PathVariable int adminId){
+		return adminService.updateAdminBySuperAdmin(adminRequest,adminId);
 	}
 	
 
