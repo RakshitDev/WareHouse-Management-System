@@ -1,7 +1,6 @@
-package com.jsp.whms.responsedto;
+package com.jsp.whms.exception;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,9 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class WareHouseResponse {
-	private int warehouseId;
-	private String wareHouseName;
+public class WareHouseNotFoundByIdException extends RuntimeException{
+	private String meaasge;
+	
 
 }

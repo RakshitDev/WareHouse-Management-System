@@ -12,7 +12,11 @@ import com.jsp.whms.util.ResponseStructure;
 
 public interface AdminService {
 
-	ResponseEntity<ResponseStructure<AdminResponse>> saveAdmin(AdminRequest adminRequest);
+	ResponseEntity<ResponseStructure<AdminResponse>> saveSuperAdmin(AdminRequest adminRequest);
+
+	ResponseEntity<ResponseStructure<AdminResponse>> saveAdmin(AdminRequest adminRequest,int warehouseId);
+
+	ResponseEntity<ResponseStructure<AdminResponse>> updateAdmin(AdminRequest adminReuest);
 	
 	
 
