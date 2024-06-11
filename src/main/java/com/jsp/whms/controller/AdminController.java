@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,10 +29,15 @@ public class AdminController {
 		return adminService.saveSuperAdmin(adminRequest);
 		
 	}
-	@PostMapping(value="/warehouses/warehouseId/admins")
+	@PostMapping(value="/warehouses/{wareHouseId}/admins")
 	ResponseEntity<ResponseStructure<AdminResponse>> saveAdmin(@RequestBody AdminRequest adminRequest,@PathVariable int wareHouseId){
 		return adminService.saveAdmin(adminRequest,wareHouseId);
 				
+	}
+	
+	@PutMapping(value = "/admins")
+	ResponseEntity<ResponseStructure<AdminResponse>> updateByAdminId(@RequestBody AdminRequest adminRequest){
+		return adminService.updateAdmin(adminRequest);
 	}
 	
 

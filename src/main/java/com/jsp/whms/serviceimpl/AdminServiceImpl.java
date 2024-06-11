@@ -6,12 +6,16 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.jsp.whms.entity.Admin;
 import com.jsp.whms.entity.WareHouse;
 import com.jsp.whms.enums.AdminType;
 import com.jsp.whms.enums.Privilage;
+import com.jsp.whms.exception.AdminNotFoundByIdException;
 import com.jsp.whms.exception.IllLegalOperationException;
 import com.jsp.whms.exception.WareHouseNotFoundByIdException;
 import com.jsp.whms.mapper.AdminMapper;
@@ -32,6 +36,9 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private WareHouseRepository wareHouseRepository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public ResponseEntity<ResponseStructure<AdminResponse>> saveSuperAdmin(AdminRequest adminRequest) {
@@ -79,6 +86,24 @@ public class AdminServiceImpl implements AdminService {
 		
 	}
 
+	@Override
+	public ResponseEntity<ResponseStructure<AdminResponse>> updateAdmin(AdminRequest adminRequest) {
+		
+		String email= SecurityContextHolder.getContext().getAuthentication().getName();
+	return	adminRepository.findByEmail(email).map(admin->{
+			adminRepository.save(adminMapper.mapToAdmin(adminRequest, admin));
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(new ResponseStructure<AdminResponse>()
+							.setStatus(HttpStatus.OK.value())
+							.setMessage("updated Admin Succcessfully")
+							.setData(adminMapper.mapToAdminResponse(admin)));
+		}).orElseThrow(()->new AdminNotFoundByIdException("Failed to update Admin"));
+		
+	  
+	  }
+		
+	}
+
 	
 
-}
+
