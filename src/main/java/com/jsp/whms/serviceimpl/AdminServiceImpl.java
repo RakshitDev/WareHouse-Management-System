@@ -117,6 +117,19 @@ public class AdminServiceImpl implements AdminService {
 		}).orElseThrow(()->new AdminNotFoundByIdException("Requested id is not Present"));
 	
 	}
+
+	@Override
+	public ResponseEntity<ResponseStructure<AdminResponse>> findByAdminId(int adminId) {
+		
+	    return adminRepository.findById(adminId).map(admin->{
+			return ResponseEntity.status(HttpStatus.FOUND)
+					.body(new ResponseStructure<AdminResponse>()
+							.setStatus(HttpStatus.FOUND.value())
+							.setMessage("Admin Founnd By Id")
+							.setData(adminMapper.mapToAdminResponse(admin))
+							);
+		}).orElseThrow(()->new AdminNotFoundByIdException("No Admin found By that Request"));
+	}
 		
 	}
 

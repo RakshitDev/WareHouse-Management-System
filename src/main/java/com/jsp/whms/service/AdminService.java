@@ -19,6 +19,8 @@ public interface AdminService {
 	ResponseEntity<ResponseStructure<AdminResponse>> updateAdmin(AdminRequest adminReuest);
 
 	ResponseEntity<ResponseStructure<AdminResponse>> updateAdminBySuperAdmin(AdminRequest adminRequest, int adminId);
+
+	ResponseEntity<ResponseStructure<AdminResponse>> findByAdminId(int adminId);
 	
 	
 
