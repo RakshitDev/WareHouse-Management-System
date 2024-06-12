@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.jsp.whms.entity.Address;
 import com.jsp.whms.entity.WareHouse;
+import com.jsp.whms.exception.AddressNotFoundByIDException;
 import com.jsp.whms.exception.WareHouseNotFoundByIdException;
 import com.jsp.whms.mapper.AddressMapper;
 import com.jsp.whms.repository.AddressRepository;
@@ -41,6 +42,19 @@ public class AddressServiceImpl  implements AddressService {
 							.setData(addressMapper.mapToAddressResponse(address)));
 		}).orElseThrow(()->new WareHouseNotFoundByIdException("No WareHouse found by Sent Id"));
 		
+		
+	}
+
+	@Override
+	public ResponseEntity<ResponseStructure<AddressResponse>> findAddress(int addressId) {
+	return 	addressRepository.findById(addressId).map(address->{
+		return ResponseEntity.status(HttpStatus.FOUND)
+				.body(new ResponseStructure<AddressResponse>()
+						.setMessage("Address found based on Id")
+						.setStatus(HttpStatus.FOUND.value())
+						.setData(addressMapper.mapToAddressResponse(address)));
+	
+	}).orElseThrow(()-> new AddressNotFoundByIDException(""));
 		
 	}
 	
