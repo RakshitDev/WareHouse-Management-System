@@ -6,6 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,5 +33,10 @@ public class AddressController {
 	@GetMapping(value = "/address/{addressId}")
 	ResponseEntity<ResponseStructure<AddressResponse>> findAddress(@PathVariable int addressId){
 		return addressService.findAddress(addressId);
+	}
+	
+	@PutMapping(value = "/{addressId}/address")
+	ResponseEntity<ResponseStructure<AddressResponse>> updateAddress(@RequestBody AddressRequest addressRequest,@PathVariable int addressId){
+		return addressService.updateAddress(addressRequest,addressId);
 	}
 }

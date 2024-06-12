@@ -14,6 +14,7 @@ import com.jsp.whms.repository.AddressRepository;
 import com.jsp.whms.repository.WareHouseRepository;
 import com.jsp.whms.requestdto.AddressRequest;
 import com.jsp.whms.responsedto.AddressResponse;
+import com.jsp.whms.responsedto.AdminResponse;
 import com.jsp.whms.service.AddressService;
 import com.jsp.whms.util.ResponseStructure;
 
@@ -57,6 +58,21 @@ public class AddressServiceImpl  implements AddressService {
 	}).orElseThrow(()-> new AddressNotFoundByIDException(""));
 		
 	}
+
+	@Override
+	public ResponseEntity<ResponseStructure<AddressResponse>> updateAddress(AddressRequest addressRequest,
+			int addressId) {
+	return	addressRepository.findById(addressId).map(address->{
+			addressRepository.save(addressMapper.mapToAddress(addressRequest, address));
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(new ResponseStructure<AddressResponse>()
+							.setStatus(HttpStatus.OK.value())
+							.setMessage("Updates Adrress")
+							.setData(addressMapper.mapToAddressResponse(address)));
+					
+		}).orElseThrow(()->new AddressNotFoundByIDException("Address not found wrong Id input"));
+	}
+
 	
 
 
